@@ -30,8 +30,9 @@ def update_item(db: Session, id: int, update_model=schemas.Item):
 def delete_item(db: Session, id: int):
     db_item = read_item(db=db, id=id)
     if db_item:
-        db.delete(db_item)
+        db_item.is_deleted = True
         db.commit()
+        db.refresh(db_item)
         return db_item
     else:
         return None
@@ -65,11 +66,13 @@ def update_item_category(db: Session, id: int, update_model=schemas.ItemCategory
 def delete_item_category(db: Session, id: int):
     db_item = read_item_category(db=db, id=id)
     if db_item:
-        db.delete(db_item)
+        db_item.is_deleted = True
         db.commit()
+        db.refresh(db_item)
         return db_item
     else:
         return None
+
     
 # Item With Category
 def create_item_with_category(db: Session, item_with_category: schemas.ItemWithCategoryCreate):
