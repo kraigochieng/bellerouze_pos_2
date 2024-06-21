@@ -12,7 +12,8 @@ class ItemWithCategory(Base):
     item_category_id = Column(Integer, ForeignKey("item_category.id"))
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, onupdate=datetime.now())
-    
+    is_deleted = Column(Boolean, default=False)
+
     item = relationship("Item", back_populates="item_with_categories")
     item_category = relationship("ItemCategory", back_populates="item_with_categories")
 
