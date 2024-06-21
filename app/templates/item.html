@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Item</title>
+    </head>
+    <body>
+        This is item page {{ id }}
+        <h1>Submit an Item</h1>
+        <form action="/items" method="post">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        {% if model is not none %}
+            <p>{{ model.name }}</p>
+        {% endif %}
+    </body>
+</html>

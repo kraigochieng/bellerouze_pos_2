@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -24,6 +24,7 @@ class Item(Base):
     description = Column(String)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, onupdate=datetime.now())
+    is_deleted = Column(Boolean, default=False)
     item_with_categories = relationship("ItemWithCategory", back_populates="item")
 
 
@@ -34,6 +35,6 @@ class ItemCategory(Base):
     name = Column(String)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, onupdate=datetime.now())
-    
+    is_deleted = Column(Boolean, default=False) 
     item_with_categories = relationship("ItemWithCategory", back_populates="item_category")
 
