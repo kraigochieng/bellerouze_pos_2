@@ -3,18 +3,9 @@ from sqlalchemy.orm import Session
 
 from .. import crud, schemas
 
-from ..database import SessionLocal
+from ..database import get_db
 
 router = APIRouter()
-
-# Dependency to get the database session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 
 @router.post("/", response_model=schemas.ItemWithCategory)

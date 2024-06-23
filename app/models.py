@@ -1,10 +1,11 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from sqlalchemy_serializer import SerializerMixin
 
 from .database import Base
 
-class ItemWithCategory(Base):
+class ItemWithCategory(Base, SerializerMixin):
     __tablename__ = "item_with_category"
 
     id = Column(Integer, primary_key=True)
@@ -17,7 +18,7 @@ class ItemWithCategory(Base):
     item = relationship("Item", back_populates="item_with_categories")
     item_category = relationship("ItemCategory", back_populates="item_with_categories")
 
-class Item(Base):
+class Item(Base, SerializerMixin):
     __tablename__ = "item"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -30,7 +31,7 @@ class Item(Base):
     item_with_categories = relationship("ItemWithCategory", back_populates="item")
     items_on_orders = relationship("ItemInOrder", back_populates="item")
 
-class ItemCategory(Base):
+class ItemCategory(Base, SerializerMixin):
     __tablename__ = "item_category"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -42,7 +43,7 @@ class ItemCategory(Base):
     item_with_categories = relationship("ItemWithCategory", back_populates="item_category")
 
 
-class Order(Base):
+class Order(Base, SerializerMixin):
     __tablename__ = "order"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -52,7 +53,7 @@ class Order(Base):
 
     items = relationship("ItemInOrder", back_populates="order")
 
-class ItemInOrder(Base):
+class ItemInOrder(Base, SerializerMixin):
     __tablename__ = "item_in_order"
 
     id = Column(Integer, primary_key=True, index=True)
