@@ -2,11 +2,17 @@ from fastapi.testclient import TestClient
 
 from ..schemas import ItemCategoryCreate as ItemCategoryCreateSchema
 from ..models import ItemCategory as ItemCategoryModel
-from .api__item_category import (
-    router,
-)
+from ..database import get_db, get_test_db
+from ..main import app
 
-client = TestClient(router)
+# from .api__item_category import (
+#     router,
+# )
+
+
+app.dependency_overrides[get_db] = get_test_db
+
+client = TestClient(app)
 
 
 fake_db = [
