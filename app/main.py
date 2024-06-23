@@ -2,12 +2,20 @@ from fastapi import FastAPI
 from .routers import api__item, api__item_category, api__item_with_category, item
 from .database import engine
 from .models import Base
-
-# Create FastAPI instance
-app = FastAPI()
+from contextlib import asynccontextmanager
 
 # Create the database tables
-Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Start Up
+    Base.metadata.create_all(bind=engine)
+    yield
+    # Shiut down
+
+
+# Create FastAPI instance
+app = FastAPI(lifespan=lifespan)
+
 
 # Prefix the routers and register them
 app.include_router(item.router, prefix="/items", tags=["items"])
