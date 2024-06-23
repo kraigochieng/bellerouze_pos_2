@@ -10,20 +10,14 @@ class ItemCreate(ItemBase):
     pass
 
 
-class ItemRead(ItemBase):
-    pass
-
-
 class ItemUpdate(ItemBase):
     pass
 
 
 class Item(ItemBase):
-    id: int
+    model_config = ConfigDict(extra="ignore", from_attributes=True)
 
-    class Config(ConfigDict):
-        from_attributes = True
-        extra = "ignore"
+    id: int
 
 
 class ItemCategoryBase(BaseModel):
@@ -39,11 +33,9 @@ class ItemCategoryUpdate(ItemCategoryBase):
 
 
 class ItemCategory(ItemCategoryBase):
-    id: int
+    model_config = ConfigDict(extra="ignore", from_attributes=True)
 
-    class Config(ConfigDict):
-        from_attributes = True
-        extra = "ignore"
+    id: int
 
 
 class ItemWithCategoryBase(BaseModel):
@@ -60,8 +52,6 @@ class ItemWithCategoryUpdate(ItemWithCategoryBase):
 
 
 class ItemWithCategory(ItemWithCategoryBase):
-    id: int
+    model_config = ConfigDict(extra="ignore", from_attributes=True)
 
-    class Config(ConfigDict):
-        from_attributes = True
-        extra = "ignore"
+    id: int
