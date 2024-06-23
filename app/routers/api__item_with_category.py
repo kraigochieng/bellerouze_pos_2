@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from .. import crud, schemas
 
-from app.database import SessionLocal
+from ..database import SessionLocal
 
 router = APIRouter()
 
@@ -27,7 +27,7 @@ def read_items_with_categories(skip: int = 0, limit: int = 10, db: Session = Dep
     return items_with_categories
 
 @router.get("/{item_with_category_id}", response_model=schemas.ItemWithCategory)
-def read_items_with_categories(item_with_category_id: int, db: Session = Depends(get_db)):
+def read_item_with_category(item_with_category_id: int, db: Session = Depends(get_db)):
     db_item_with_category = crud.read_item_with_category(db=db, id=item_with_category_id)
     if db_item_with_category is None:
         raise HTTPException(status_code=404, detail="Item with category not found")

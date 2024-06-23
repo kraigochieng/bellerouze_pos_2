@@ -26,8 +26,9 @@ class Item(Base):
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, onupdate=datetime.now())
     is_deleted = Column(Boolean, default=False)
-    item_with_categories = relationship("ItemWithCategory", back_populates="item")
 
+    item_with_categories = relationship("ItemWithCategory", back_populates="item")
+    items_on_orders = relationship("ItemInOrder", back_populates="item")
 
 class ItemCategory(Base):
     __tablename__ = "item_category"
@@ -37,5 +38,30 @@ class ItemCategory(Base):
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, onupdate=datetime.now())
     is_deleted = Column(Boolean, default=False) 
+    
     item_with_categories = relationship("ItemWithCategory", back_populates="item_category")
 
+
+class Order(Base):
+    __tablename__ = "order"
+
+    id = Column(Integer, primary_key=True, index=True)
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, onupdate=datetime.now())
+    is_deleted = Column(Boolean, default=False)
+
+    items = relationship("ItemInOrder", back_populates="order")
+
+class ItemInOrder(Base):
+    __tablename__ = "item_in_order"
+
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(Integer, ForeignKey("order.id"))
+    item_id = Column(Integer, ForeignKey("item.id"))
+    quantity = Column(Integer)
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, onupdate=datetime.now())
+    is_deleted = Column(Boolean, default=False)
+
+    order = relationship("Order", back_populates="items")
+    item = relationship("Item", back_populates="items_on_orders")
