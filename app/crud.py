@@ -1,4 +1,6 @@
+from sqlalchemy import not_
 from sqlalchemy.orm import Session
+
 from . import models, schemas
 
 
@@ -14,7 +16,7 @@ def create_item(db: Session, item: schemas.ItemCreate):
 def read_item(db: Session, id: int):
     return (
         db.query(models.Item)
-        .filter(models.Item.id == id, models.Item.is_deleted is False)
+        .filter(models.Item.id == id, not_(models.Item.is_deleted))
         .first()
     )
 
@@ -22,7 +24,7 @@ def read_item(db: Session, id: int):
 def read_items(db: Session, skip: int = 0, limit: int = 10):
     return (
         db.query(models.Item)
-        .filter(models.Item.is_deleted is False)
+        .filter(not_(models.Item.is_deleted))
         .offset(skip)
         .limit(limit)
         .all()
@@ -65,7 +67,7 @@ def create_item_category(db: Session, item_category: schemas.ItemCategoryCreate)
 def read_item_category(db: Session, id: int):
     return (
         db.query(models.ItemCategory)
-        .filter(models.ItemCategory.id == id, models.ItemCategory.is_deleted is False)
+        .filter(models.ItemCategory.id == id, not_(models.ItemCategory.is_deleted))
         .first()
     )
 
@@ -73,7 +75,7 @@ def read_item_category(db: Session, id: int):
 def read_item_categories(db: Session, skip: int = 0, limit: int = 10):
     return (
         db.query(models.ItemCategory)
-        .filter(models.ItemCategory.is_deleted is False)
+        .filter(not_(models.ItemCategory.is_deleted))
         .offset(skip)
         .limit(limit)
         .all()
@@ -120,7 +122,7 @@ def read_item_with_category(db: Session, id: int):
         db.query(models.ItemWithCategory)
         .filter(
             models.ItemWithCategory.id == id,
-            models.ItemWithCategory.is_deleted is False,
+            not_(models.ItemWithCategory.is_deleted),
         )
         .first()
     )
@@ -129,7 +131,7 @@ def read_item_with_category(db: Session, id: int):
 def read_item_with_categories(db: Session, skip: int = 0, limit: int = 10):
     return (
         db.query(models.ItemWithCategory)
-        .filter(models.ItemWithCategory.is_deleted is False)
+        .filter(not_(models.ItemWithCategory.is_deleted))
         .offset(skip)
         .limit(limit)
         .all()
