@@ -31,7 +31,7 @@ def read_items(db: Session, skip: int = 0, limit: int = 10):
     )
 
 
-def update_item(db: Session, id: int, update_model=schemas.Item):
+def update_item(db: Session, id: int, update_model=schemas.ItemUpdate):
     model_in_db = read_item(db=db, id=id)
     if model_in_db:
         for key, value in update_model.model_dump().items():
