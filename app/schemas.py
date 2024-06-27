@@ -9,6 +9,8 @@ class ItemCreate(BaseModel):
 
 
 class ItemRead(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
     id: int
     name: str
     description: str
@@ -24,6 +26,8 @@ class ItemCategoryCreate(BaseModel):
 
 
 class ItemCategoryRead(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
     id: int
     name: str
 
@@ -38,6 +42,8 @@ class ItemWithCategoryCreate(BaseModel):
 
 
 class ItemWithCategoryRead(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
     item_id: int
     item_category_id: int
 
@@ -45,9 +51,3 @@ class ItemWithCategoryRead(BaseModel):
 class ItemWithCategoryUpdate(BaseModel):
     item_id: Optional[int]
     item_category_id: Optional[int]
-
-
-class ItemWithCategory(ItemWithCategoryBase):
-    model_config = ConfigDict(extra="ignore", from_attributes=True)
-
-    id: int
