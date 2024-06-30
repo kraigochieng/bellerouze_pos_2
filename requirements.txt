@@ -3,3 +3,5 @@ fastapi[all]
 Jinja2
 httpx
 SQLAlchemy-serializer
+pytest
+pytest-mock
